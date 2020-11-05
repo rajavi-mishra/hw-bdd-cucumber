@@ -24,10 +24,25 @@ Background: movies have been added to database
 
 Scenario: restrict to movies with 'PG' or 'R' ratings
   # enter step(s) to check the 'PG' and 'R' checkboxes
+  When I check the following ratings: 'PG', 'R'
   # enter step(s) to uncheck all other checkboxes
+  When I uncheck the following ratings: 'G', 'PG-13'
   # enter step to "submit" the search form on the homepage
+  And I press the 'Refresh' button
   # enter step(s) to ensure that PG and R movies are visible
+  Then I should see the following movies: 'The Terminator',  'When Harry Met Sally', 'Amelie', 'The Incredibles', 'Raiders of the Lost Ark'  
   # enter step(s) to ensure that other movies are not visible
+  And I cannot see the following movies: 'Aladdin', 'The Help', 'Chocolat', '2001: A Space Odyssey', 'Chicken Run'
 
 Scenario: all ratings selected
   # see assignment
+  When I follow ratings
+  Then I should see "Aladdin" before "Amelie"
+  Then I should see "Amelie" before "Chicken Run"
+  Then I should see "Chicken Run" before "Chocolat"
+  Then I should see "Chocolat" before "Raiders of the Lost Ark"
+  Then I should see "Raiders of the Lost Ark" before "The Help"
+  Then I should see "The Help" before "The Incredibles"
+  Then I should see "The Incredibles" before "The Terminator"
+  Then I should see "The Terminator" before "When Harry Met Sally"
+  Then I should see "When Harry Met Sally" before "2001: A Space Odyssey"
